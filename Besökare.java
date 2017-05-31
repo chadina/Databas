@@ -1,13 +1,13 @@
 package Festival;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 import javax.swing.*;
 
 public class Besökare extends JPanel {
 	
 	private JPanel panel = new JPanel();
-	private JPanel childpanel = new JPanel();
 	private JLabel spelschema = new JLabel("Spelschema");
 	private JLabel bandnamn = new JLabel("Band");
 	private JLabel vart = new JLabel("Plats");
@@ -15,20 +15,26 @@ public class Besökare extends JPanel {
 	private JLabel bandinfo = new JLabel("Bandinfo");
 	private JLabel kontakt = new JLabel("Kontaktperson");
 	private JLabel info = new JLabel("Skriv in det band du vill ha mer info ifrån här:");
+	private JLabel sceninfo = new JLabel("Välj ifrån listan vilken scen du vill ha mer info ifrån:");
 	private JTextArea textarea = new JTextArea("");
 	private JTextArea bandtext = new JTextArea("");
 	private JButton klar = new JButton("Fortsätt");
-
+	private JComboBox box = new JComboBox();
+	
 	
 	public Besökare() {
 		
 		
-
-	//	setPreferredSize(new Dimension(600, 600));
 		panel.setPreferredSize(new Dimension(600, 600));
 		panel.setBackground(Color.WHITE);
 		bandtext.setBackground(Color.LIGHT_GRAY);
 		textarea.setBackground(Color.LIGHT_GRAY);
+		box.addItem("Mallorcascenen");
+		box.addItem("Dieseltältet");
+		box.addItem("Forumscenen");
+		box.setSelectedItem(null);
+
+
 
 		this.add(panel);
 		this.add(spelschema);
@@ -41,6 +47,10 @@ public class Besökare extends JPanel {
 		this.add(bandtext);
 		this.add(info);
 		this.add(klar);
+		this.add(sceninfo);
+		this.add(box);
+		
+		
 	    panel.setLayout(null);
 		
 		spelschema.setFont( new Font("Comic Sans MS", Font.BOLD, 20) );
@@ -51,9 +61,11 @@ public class Besökare extends JPanel {
 		tid.setBounds(400,60, 150, 40);
 		kontakt.setBounds(480,60, 150, 40);
 		textarea.setBounds(40, 90, 530, 300);
-		bandtext.setBounds(40, 450, 250, 20);
-		info.setBounds(40, 420, 300, 40);
-		klar.setBounds(300, 450, 100, 20);
+		bandtext.setBounds(40, 500, 250, 20);
+		info.setBounds(40, 470, 480, 40);
+		sceninfo.setBounds(40, 390, 400, 40);
+		klar.setBounds(300, 500, 100, 20);
+		box.setBounds(40, 420, 170, 20);
 
 	
 		panel.add(spelschema);
@@ -66,6 +78,9 @@ public class Besökare extends JPanel {
 		panel.add(bandtext);
 		panel.add(info);
 		panel.add(klar);
+		panel.add(sceninfo);
+		panel.add(box);
+		
 				
 		
 	}
