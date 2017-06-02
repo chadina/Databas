@@ -1,8 +1,9 @@
-package Festival;
+package projekt;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.*;
 
@@ -23,14 +24,14 @@ public class Kansliet extends JPanel {
 	private JButton btnboka = new JButton("Boka band");
 	private JButton btnkontakt = new JButton("Boka kontakperson");
 	private JButton btnspel = new JButton("Boka spelning");
-	private JTextArea textmedlem = new JTextArea("");
-	private JTextArea textband = new JTextArea("");
-	private JTextArea textkontakt = new JTextArea("");
-	private JTextArea textprn = new JTextArea("");
-	private JTextArea textspelband = new JTextArea("");
-	private JTextArea textspelplats = new JTextArea("");
-	private JTextArea textspeltid = new JTextArea("");
-	private JTextArea textspelbandinfo = new JTextArea("");
+	private JTextArea textmedlem;
+	private JTextArea textband;
+	private JTextArea textkontakt = new JTextArea();
+	private JTextArea textprn = new JTextArea();
+	private JTextArea textspelband = new JTextArea();
+	private JTextArea textspelplats = new JTextArea();
+	private JTextArea textspeltid = new JTextArea();
+	private JTextArea textspelbandinfo = new JTextArea();
 	private kListener klist = new kListener();
 
 
@@ -40,6 +41,8 @@ public class Kansliet extends JPanel {
 
 	
 	public Kansliet() {
+		textband = new JTextArea();
+		textmedlem = new JTextArea("hej");
 		
 		btnboka.addActionListener(klist);
 		btnkontakt.addActionListener(klist);
@@ -138,10 +141,65 @@ public class Kansliet extends JPanel {
 	}
 	
 	private class kListener implements ActionListener {
-
+		String band, contact, member, prn, bandinfo, scen, tid; 
+		DBConnectionUser user ; 
 		
-		public void actionPerformed(ActionEvent arg0) {
-			// TODO Auto-generated method stub
+		public void actionPerformed(ActionEvent e) {
+			try {
+				user = new 	DBConnectionUser();
+			} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}
+//			DBConnectionVisitor DBconn = null;
+//			try {
+//				DBconn = new DBConnectionVisitor();
+//			} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e2) {
+//				e2.printStackTrace();
+//			}
+			
+			
+			if( e.getSource()==btnboka){
+				band = textband.getText();
+				member = textmedlem.getText();
+				try {
+					user.bookBand(band, member);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				System.out.println(band + " " + member);
+				
+				
+			} else if (e.getSource()==btnkontakt){
+				
+				contact = textkontakt.getText();
+				prn = textprn.getText();
+				System.out.println(contact + prn);
+				try {
+					System.out.println("tja" );
+					user.giveContact(contact, prn);	
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				band = textmedlem.getText();
+			} else if (e.getSource()==btnspel){
+				band = textspelband.getText();
+				bandinfo = textspelbandinfo.getText();
+				scen = textspelplats.getText();
+				tid = textspeltid.getText();
+				System.out.println(band + " " + bandinfo + " " + scen + " " + tid);
+				
+				try {
+					user.bookSpelning(band, bandinfo, scen, tid);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+			
 			
 		}
 		
